@@ -1,10 +1,11 @@
+```python
 import os
 import subprocess
 from flask import Flask, request
 
 app = Flask(__name__)
 
-# Erro 1: Exposi√ß√£o de dados sens√≠veis
+# Erro 1: ExposiÁ„o de dados sensÌveis
 @app.route('/api/v1/show_password')
 def show_password():
     password = "secret_password" # Never expose sensitive data in code
@@ -12,13 +13,13 @@ def show_password():
 
 @app.route('/api/v1/run_command')
 def run_command():
-    # Erro 2: Inje√ß√£o de comando
+    # Erro 2: InjeÁ„o de comando
     command = request.args.get('command')
     result = os.system(command) # Never use unfiltered user's input to run system command
     return str(result)
 
 @app.route('/api/v1/files')
-def readFile():
+def read_file():
     filepath = request.args.get('filepath')
     # Erro 3: Leitura de caminho de arquivo tratada inseguramente
     file = open( filepath , 'r') # Dangerous path traversal without checking
@@ -26,16 +27,17 @@ def readFile():
     file.close()
     return content
 
-# Erro 4: fun√ß√£o que nunca √© usada
+# Erro 4: funÁ„o que nunca È usada
 def unused_function():
     print("Estou perdido aqui!")
 
-# Erro 5: Uso desnecess√°rio de recursos em um loop
+# Erro 5: Uso desnecess·rio de recursos em um loop
 def accumulate_large_list():
-    largeList = []
+    large_list = []
     for i in range(10000000):
-        largeList.append(i)
-    return sum(largeList)
+        large_list.append(i)
+    return sum(large_list)
 
 if __name__ == "__main__":
     app.run(debug = True)
+```
